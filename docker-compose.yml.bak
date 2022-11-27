@@ -1,0 +1,43 @@
+version: "3.7"
+
+networks:
+  network_auth:
+
+
+services:
+
+  app:
+    build:
+      args:
+        user: eduardo
+        uid: 1000
+        context: ./
+        dockerfile: Dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ../voumen/app:/var/www
+    networks:
+      - network_auth
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    networks:
+      - network_auth
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ../volumen/nginx/var/www:/var/www
+      - ../volumen/nginx/etc/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - network_auth
