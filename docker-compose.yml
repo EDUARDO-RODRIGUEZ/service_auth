@@ -24,10 +24,10 @@ services:
     image: mysql:8.0
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_DATABASE: dbusuario
+      MYSQL_ROOT_PASSWORD: eduardo
+      MYSQL_PASSWORD: eduardo
+      MYSQL_USER: eduardo
     networks:
       - network_auth
 
@@ -37,7 +37,7 @@ services:
     ports:
       - 8000:80
     volumes:
-      - ../volumen/nginx/var/www:/var/www
-      - ../volumen/nginx/etc/nginx/conf.d/:/etc/nginx/conf.d/
+      - ../volumen/app:/var/www
+      - ../volumen/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - network_auth

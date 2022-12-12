@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.0-fpm
 # Arguments defined in docker-compose.yml
 ARG user
 ARG uid
@@ -23,4 +23,5 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 # Set working directory
 WORKDIR /var/www
+RUN chmod -R 777 /var/www
 USER $user
